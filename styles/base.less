@@ -1,15 +1,24 @@
 @import "syntax-variables";
 
+.editor, atom-text-editor::shadow {
+  .bracket-matcher {
+    border-bottom: 2px solid lighten(@blue, 40%);
+    position: absolute;
+    border: 1px solid lighten(@blue, 40%);
+    background-color: lighten(@blue, 40%);
+  }
+}
+
 atom-text-editor, :host {
-  background-color: @syntax-background-color;
-  color: @syntax-text-color;
+  background-color: @wheat-background;
+  color: @wheat-background;
 
   .wrap-guide {
-    background-color: @syntax-wrap-guide-color;
+    background-color: @wheat-background;
   }
 
   .indent-guide {
-    color: @syntax-indent-guide-color;
+    color: @wheat-background;
   }
 
   .invisible-character {
@@ -17,17 +26,17 @@ atom-text-editor, :host {
   }
 
   .gutter {
-    background-color: @syntax-gutter-background-color;
+    background-color: @wheat-background;
     color: @syntax-gutter-text-color;
 
     .line-number {
       &.cursor-line {
-        background-color: @syntax-gutter-background-color-selected;
-        color: @syntax-gutter-text-color-selected;
+        background-color: rgb(215, 215, 215);
+        color: @light-gray;
       }
 
       &.cursor-line-no-selection {
-        color: @syntax-gutter-text-color-selected;
+        color: @light-gray;
       }
     }
   }
@@ -39,15 +48,15 @@ atom-text-editor, :host {
   }
 
   .invisible {
-    color: @syntax-text-color;
+    color: @light-gray;
   }
 
   .cursor {
-    color: @syntax-cursor-color;
+    color: @blue;
   }
 
   .selection .region {
-    background-color: @syntax-selection-color;
+    background-color: rgb(215, 215, 215);
   }
 }
 
@@ -64,17 +73,27 @@ atom-text-editor .search-results .marker.current-result .region,
 
 .comment {
   color: @light-gray;
+  font-style: italic;
+  font-weight: 200;
 }
 
 .keyword {
   color: @purple;
 
   &.control {
-    color: @purple;
+    color: @orange;
+    font-weight: bold;
+    font-style: italic;
+
+    &.conditional {
+      color: @green;
+    }
   }
 
   &.operator {
-    color: @syntax-text-color;
+    color: @green;
+    font-style: italic;
+    font-weight: 500;
   }
 
   &.other.special-method {
@@ -82,23 +101,35 @@ atom-text-editor .search-results .marker.current-result .region,
   }
 
   &.other.unit {
-    color: @orange;
+    color: @light-gray;
   }
 }
 
 .storage {
-  color: @purple;
+  color: @yellow;
+  font-weight: bolder;
+  font-style: italic;
+
+  &.type {
+    &.class {
+      color: @magenta;
+      font-weight: 500;
+      font-style: italic;
+    }
+  }
 }
 
 .constant {
-  color: @orange;
+  color: @red;
+  font-style: normal;
+  font-weight: bolder;
 
   &.character.escape {
     color: @cyan;
   }
 
   &.numeric {
-    color: @orange;
+    color: @purple;
   }
 
   &.other.color {
@@ -111,7 +142,26 @@ atom-text-editor .search-results .marker.current-result .region,
 }
 
 .variable {
-  color: @red;
+  color: @magenta;
+  font-weight: 500;
+  font-style: italic;
+  &.other {
+    &.object {
+      &.js {
+        color: @light-gray;
+        font-weight: 500;
+        font-style: italic;
+      }
+    }
+    &.readwrite {
+      /* name of the module when import */
+      &.js {
+        color: @light-gray;
+        font-style: italic;
+        font-weight: 500;
+      }
+    }
+  }
 
   &.interpolation {
     color: darken(@red, 10%);
@@ -128,8 +178,19 @@ atom-text-editor .search-results .marker.current-result .region,
 }
 
 .string {
-  color: @green;
+  color: @cyan;
+  font-weight: 400;
+  font-style: italic;
 
+  &.quoted {
+    &.module {
+      /* import module name */
+      &.js {
+        color: @cyan;
+        font-style: italic;
+      }
+    }
+  }
 
   &.regexp {
     color: @cyan;
@@ -146,6 +207,11 @@ atom-text-editor .search-results .marker.current-result .region,
 
 .punctuation {
   &.definition {
+    &.tag {
+      color: @light-gray;
+      font-weight: 500;
+      font-style: italic;
+    }
     &.comment {
       color: @light-gray;
     }
@@ -154,7 +220,8 @@ atom-text-editor .search-results .marker.current-result .region,
     &.variable,
     &.parameters,
     &.array {
-      color: @syntax-text-color;
+      color: @cyan;
+      font-style: italic;
     }
 
     &.heading,
@@ -173,22 +240,59 @@ atom-text-editor .search-results .marker.current-result .region,
     }
   }
 
+  &.terminator {
+    color: @light-gray;
+    font-weight: 500;
+    font-style: italic;
+  }
+
   &.section.embedded {
-    color: darken(@red, 10%);
+    color: @magenta;
+    font-weight: 500;
+    font-style: italic;
   }
 
 }
 
 .support {
   &.class {
-    color: @light-orange;
+    color: @cyan;
+    font-weight: 500;
+    font-style: italic;
   }
 
   &.function  {
-    color: @cyan;
+    color: @light-gray;
+    font-weight: 500;
+    font-style: italic;
 
     &.any-method {
       color: @blue;
+    }
+  }
+
+  &.type {
+    &.object {
+      &.node {
+        color: @magenta;
+        font-weight: 500;
+        font-style: italic;
+      }
+      &.console {
+        color: @cyan;
+        font-weight: 500;
+        font-style: italic;
+      }
+      &.process {
+        color: @cyan;
+        font-weight: 500;
+        font-style: italic;
+      }
+      &.dom {
+        color: @cyan;
+        font-weight: 500;
+        font-style: italic;
+      }
     }
   }
 }
@@ -196,6 +300,8 @@ atom-text-editor .search-results .marker.current-result .region,
 .entity {
   &.name.function {
     color: @blue;
+    font-weight: 500;
+    font-style: italic;
   }
   &.name.type {
     color: @light-orange;
@@ -214,12 +320,15 @@ atom-text-editor .search-results .marker.current-result .region,
   }
 
   &.name.tag {
-    color: @red;
-    text-decoration: underline;
+    color: @purple;
+    font-weight: 500;
+    font-style: italic;
   }
 
   &.other.attribute-name {
-    color: @orange;
+    color: @magenta;
+    font-weight: 500;
+    font-style: italic;
 
     &.id {
       color: @blue;
@@ -244,9 +353,21 @@ atom-text-editor .search-results .marker.current-result .region,
     color: @purple;
   }
 
+  &.brace {
+    color: @light-gray;
+    font-style: italic;
+    font-weight: 500;
+  }
+
   &.separator {
     background-color: @gray;
     color: @syntax-text-color;
+  }
+
+  &.delimiter {
+    color: @light-gray;
+    font-style: italic;
+    font-weight: 500;
   }
 }
 
